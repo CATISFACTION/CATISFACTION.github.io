@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /
+
+Sitemap: https://catisfaction.github.io/sitemap-index.xml
+

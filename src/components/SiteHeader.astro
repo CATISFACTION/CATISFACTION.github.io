@@ -1,0 +1,172 @@
+---
+import { Menu, X } from "@lucide/astro";
+import ThemeToggle from "./ThemeToggle.astro";
+
+const navItems = [
+  { href: "/", label: "Home" },
+  { href: "/about/", label: "About" },
+  { href: "/projects/", label: "Projects" },
+  { href: "/contact/", label: "Contact" },
+];
+
+const pathname = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <a class="brand" href="/" aria-label="Home">
+    <span class="brand-mark">MV</span>
+    <span class="brand-text">Maya Voss</span>
+  </a>
+
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">
+    <Menu class="icon-open" size={20} aria-hidden="true" />
+    <X class="icon-close" size={20} aria-hidden="true" />
+    <span class="sr-only">Menu</span>
+  </button>
+
+  <nav id="primary-navigation" class="primary-nav" aria-label="Primary navigation">
+    {navItems.map((item) => (
+      <a href={item.href} aria-current={pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href)) ? "page" : undefined}>
+        {item.label}
+      </a>
+    ))}
+    <ThemeToggle />
+  </nav>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>(".nav-toggle");
+  const nav = document.querySelector<HTMLElement>(".primary-nav");
+
+  toggle?.addEventListener("click", () => {
+    const isOpen = toggle.getAttribute("aria-expanded") === "true";
+    toggle.setAttribute("aria-expanded", String(!isOpen));
+    nav?.toggleAttribute("data-open", !isOpen);
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 76px;
+    padding-inline: clamp(16px, 4vw, 48px);
+    border-bottom: 1px solid color-mix(in srgb, var(--line) 76%, transparent);
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(18px);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .brand-mark {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    background: var(--text);
+    color: var(--bg);
+    font-family: "Iowan Old Style", Georgia, serif;
+    font-size: 0.9rem;
+    letter-spacing: 0;
+  }
+
+  .brand-text {
+    font-size: 0.78rem;
+  }
+
+  .primary-nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.9rem, 2vw, 1.8rem);
+  }
+
+  .primary-nav > a {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 180ms ease;
+  }
+
+  .primary-nav > a:hover,
+  .primary-nav > a[aria-current="page"] {
+    color: var(--text);
+  }
+
+  .nav-toggle {
+    display: none;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--text);
+  }
+
+  .icon-close {
+    display: none;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (max-width: 760px) {
+    .site-header {
+      min-height: 68px;
+    }
+
+    .nav-toggle {
+      display: grid;
+    }
+
+    .nav-toggle[aria-expanded="true"] .icon-open {
+      display: none;
+    }
+
+    .nav-toggle[aria-expanded="true"] .icon-close {
+      display: block;
+    }
+
+    .primary-nav {
+      position: absolute;
+      top: 68px;
+      right: 12px;
+      left: 12px;
+      display: none;
+      align-items: stretch;
+      padding: 1rem;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .primary-nav[data-open] {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .primary-nav > a {
+      padding: 0.72rem 0;
+    }
+  }
+</style>

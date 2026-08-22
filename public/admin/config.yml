@@ -1,0 +1,104 @@
+backend:
+  name: github
+  repo: CATISFACTION/CATISFACTION.github.io
+  branch: main
+  use_graphql: true
+
+site_url: https://catisfaction.github.io
+display_url: https://catisfaction.github.io
+logo_url: /favicon.svg
+media_folder: public/uploads
+public_folder: /uploads
+publish_mode: editorial_workflow
+
+slug:
+  encoding: ascii
+  clean_accents: true
+
+collections:
+  - name: profile
+    label: Profile and Contact
+    files:
+      - label: Profile
+        name: profile
+        file: src/data/profile.json
+        fields:
+          - { label: Full Name, name: name, widget: string }
+          - { label: Role or Title, name: role, widget: string }
+          - { label: Hero Headline, name: heroHeadline, widget: text }
+          - { label: Short Introduction, name: intro, widget: text }
+          - label: Profile Photo
+            name: profilePhoto
+            widget: object
+            fields:
+              - { label: Image, name: src, widget: image }
+              - { label: Alt Text, name: alt, widget: string }
+          - { label: Biography, name: bio, widget: text }
+          - label: Experience Summary
+            name: experience
+            widget: list
+            field: { label: Item, name: item, widget: string }
+          - label: Skills
+            name: skills
+            widget: list
+            field: { label: Skill, name: skill, widget: string }
+          - label: Software Expertise
+            name: software
+            widget: list
+            field: { label: Software, name: software, widget: string }
+          - label: Contact
+            name: contact
+            widget: object
+            fields:
+              - { label: Email, name: email, widget: string }
+              - { label: Phone, name: phone, widget: string, required: false }
+              - { label: Location, name: location, widget: string }
+              - { label: LinkedIn, name: linkedin, widget: string, required: false }
+              - { label: Behance, name: behance, widget: string, required: false }
+          - { label: Availability Note, name: availability, widget: text, required: false }
+
+  - name: projects
+    label: Projects
+    folder: src/content/projects
+    create: true
+    extension: mdx
+    format: frontmatter
+    slug: "{{slug}}"
+    summary: "{{title}} - {{year}}"
+    sortable_fields: ["title", "year", "category", "featured"]
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Slug, name: slug, widget: string, hint: "Lowercase URL slug, for example: warm-apartment" }
+      - { label: Location, name: location, widget: string }
+      - { label: Area, name: area, widget: string }
+      - { label: Excerpt, name: excerpt, widget: text }
+      - { label: Description, name: description, widget: text }
+      - label: Cover Image
+        name: coverImage
+        widget: object
+        fields:
+          - { label: Image, name: src, widget: image }
+          - { label: Alt Text, name: alt, widget: string }
+      - label: Gallery
+        name: gallery
+        widget: list
+        min: 1
+        fields:
+          - { label: Image, name: src, widget: image }
+          - { label: Alt Text, name: alt, widget: string }
+          - { label: Caption, name: caption, widget: string, required: false }
+      - { label: YouTube URL, name: youtubeUrl, widget: string, required: false }
+      - { label: Year, name: year, widget: number, value_type: int, required: false }
+      - { label: Category, name: category, widget: string, required: false }
+      - label: Software
+        name: software
+        widget: list
+        required: false
+        field: { label: Software, name: software, widget: string }
+      - label: Tags
+        name: tags
+        widget: list
+        required: false
+        field: { label: Tag, name: tag, widget: string }
+      - { label: Featured, name: featured, widget: boolean, default: false }
+      - { label: Rich Project Content, name: body, widget: markdown, required: false }

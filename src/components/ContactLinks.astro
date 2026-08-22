@@ -1,0 +1,60 @@
+---
+import { BriefcaseBusiness, ExternalLink, Mail, MapPin, Phone } from "@lucide/astro";
+import profile from "../data/profile.json";
+
+const contact = profile.contact;
+const phoneHref = contact.phone ? `tel:${contact.phone.replace(/[^\d+]/g, "")}` : "";
+---
+
+<div class="contact-links">
+  <a href={`mailto:${contact.email}`}>
+    <Mail size={18} aria-hidden="true" />
+    <span>{contact.email}</span>
+  </a>
+  {contact.phone && (
+    <a href={phoneHref}>
+      <Phone size={18} aria-hidden="true" />
+      <span>{contact.phone}</span>
+    </a>
+  )}
+  <span>
+    <MapPin size={18} aria-hidden="true" />
+    <span>{contact.location}</span>
+  </span>
+  {contact.linkedin && (
+    <a href={contact.linkedin} target="_blank" rel="noopener noreferrer">
+      <ExternalLink size={18} aria-hidden="true" />
+      <span>LinkedIn</span>
+    </a>
+  )}
+  {contact.behance && (
+    <a href={contact.behance} target="_blank" rel="noopener noreferrer">
+      <BriefcaseBusiness size={18} aria-hidden="true" />
+      <span>Behance</span>
+    </a>
+  )}
+</div>
+
+<style>
+  .contact-links {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  a,
+  .contact-links > span {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 44px;
+    color: var(--text-muted);
+  }
+
+  a:hover {
+    color: var(--text);
+  }
+
+  svg {
+    color: var(--accent-strong);
+  }
+</style>

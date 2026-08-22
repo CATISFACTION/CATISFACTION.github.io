@@ -1,0 +1,50 @@
+---
+import { getCollection } from "astro:content";
+import ProjectCard from "../../components/ProjectCard.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { sortProjects } from "../../lib/projects";
+
+const projects = sortProjects(await getCollection("projects"));
+---
+
+<BaseLayout title="Projects" description="Selected 3D visualization and interior design projects across residential, hospitality, workspace, and adaptive reuse.">
+  <section class="page-hero">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Projects"
+        title="A portfolio built for atmosphere, clarity, and client decisions."
+        copy="Each project entry is managed through content collections and can be edited through the CMS."
+      />
+    </div>
+  </section>
+
+  <section class="projects-section">
+    <div class="container project-grid" data-stagger>
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-block: clamp(72px, 13vw, 150px) 0;
+  }
+
+  .projects-section {
+    padding-block: clamp(48px, 8vw, 104px);
+  }
+
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2.2rem, 6vw, 5.5rem) clamp(1.4rem, 3vw, 2.5rem);
+  }
+
+  @media (max-width: 760px) {
+    .project-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+

@@ -1,0 +1,56 @@
+---
+import ContactLinks from "../components/ContactLinks.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import profile from "../data/profile.json";
+---
+
+<BaseLayout title="Contact" description={profile.availability}>
+  <section class="contact-hero">
+    <div class="container contact-grid">
+      <div data-reveal>
+        <p class="eyebrow">Contact</p>
+        <h1 class="headline">Discuss a space, an image set, or an upcoming presentation.</h1>
+      </div>
+      <div class="contact-panel" data-reveal data-reveal-delay="0.1">
+        <p>{profile.availability}</p>
+        <ContactLinks />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-hero {
+    min-height: calc(100svh - 76px);
+    display: grid;
+    align-items: center;
+    padding-block: clamp(72px, 13vw, 150px);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);
+    gap: clamp(2rem, 7vw, 6rem);
+  }
+
+  .contact-panel {
+    display: grid;
+    align-content: start;
+    gap: 2rem;
+    padding-top: 0.4rem;
+  }
+
+  .contact-panel > p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  @media (max-width: 760px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+

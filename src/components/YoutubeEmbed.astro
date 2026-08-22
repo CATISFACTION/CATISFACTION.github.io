@@ -1,0 +1,49 @@
+---
+import { getYouTubeEmbedUrl } from "../lib/youtube";
+
+interface Props {
+  url?: string;
+  title: string;
+}
+
+const { url, title } = Astro.props;
+const embedUrl = getYouTubeEmbedUrl(url);
+---
+
+{embedUrl && (
+  <section class="video-section section" aria-labelledby="video-title">
+    <div class="container">
+      <p class="eyebrow">Film</p>
+      <h2 id="video-title" class="subheadline">Walkthrough and moving image</h2>
+      <div class="video-frame" data-reveal>
+        <iframe
+          src={embedUrl}
+          title={`${title} video`}
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .video-section {
+    border-top: 1px solid var(--line);
+  }
+
+  .video-frame {
+    aspect-ratio: 16 / 9;
+    margin-top: 2rem;
+    overflow: hidden;
+    background: var(--surface-muted);
+  }
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>
+

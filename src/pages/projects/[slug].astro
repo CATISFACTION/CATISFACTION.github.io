@@ -1,0 +1,265 @@
+---
+import { getCollection, render } from "astro:content";
+import { ArrowLeft } from "@lucide/astro";
+import YoutubeEmbed from "../../components/YoutubeEmbed.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { projectUrl, sortProjects } from "../../lib/projects";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({
+    params: { slug: project.data.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const data = project.data;
+const allProjects = sortProjects(await getCollection("projects"));
+const related = allProjects.filter((item) => item.data.slug !== data.slug).slice(0, 2);
+---
+
+<BaseLayout title={data.title} description={data.excerpt} image={data.coverImage.src}>
+  <article>
+    <header class="project-hero">
+      <div class="container project-hero-grid">
+        <div class="project-title" data-reveal>
+          <a class="back-link" href="/projects/">
+            <ArrowLeft size={16} aria-hidden="true" />
+            Projects
+          </a>
+          <p class="eyebrow">{data.category ?? "Project"}</p>
+          <h1 class="headline">{data.title}</h1>
+          <p class="body-large">{data.excerpt}</p>
+        </div>
+        <dl class="project-facts" data-reveal data-reveal-delay="0.1">
+          <div>
+            <dt>Location</dt>
+            <dd>{data.location}</dd>
+          </div>
+          <div>
+            <dt>Area</dt>
+            <dd>{data.area}</dd>
+          </div>
+          {data.year && (
+            <div>
+              <dt>Year</dt>
+              <dd>{data.year}</dd>
+            </div>
+          )}
+          {data.software.length > 0 && (
+            <div>
+              <dt>Software</dt>
+              <dd>{data.software.join(", ")}</dd>
+            </div>
+          )}
+        </dl>
+      </div>
+      <figure class="cover" data-reveal>
+        <img src={data.coverImage.src} alt={data.coverImage.alt} decoding="async" />
+      </figure>
+    </header>
+
+    <section class="section project-body">
+      <div class="container body-grid">
+        <div data-reveal>
+          <p class="eyebrow">Narrative</p>
+          <h2 class="subheadline">Brief and visual direction</h2>
+        </div>
+        <div class="prose" data-reveal data-reveal-delay="0.1">
+          <p>{data.description}</p>
+          <Content />
+        </div>
+      </div>
+    </section>
+
+    <section class="section gallery-section">
+      <div class="container">
+        <p class="eyebrow">Gallery</p>
+        <div class="gallery-grid" data-stagger>
+          {data.gallery.map((image, index) => (
+            <figure data-stagger-item class={index === 0 ? "wide" : ""}>
+              <img src={image.src} alt={image.alt} loading="lazy" decoding="async" />
+              {image.caption && <figcaption>{image.caption}</figcaption>}
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <YoutubeEmbed url={data.youtubeUrl} title={data.title} />
+
+    {related.length > 0 && (
+      <section class="section related-section">
+        <div class="container">
+          <p class="eyebrow">Next studies</p>
+          <div class="related-grid">
+            {related.map((item) => (
+              <a href={projectUrl(item)}>
+                <span>{item.data.title}</span>
+                <small>{item.data.category ?? "Project"} / {item.data.year ?? ""}</small>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+  </article>
+</BaseLayout>
+
+<style>
+  .project-hero {
+    padding-block: clamp(54px, 10vw, 124px) 0;
+  }
+
+  .project-hero-grid,
+  .body-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.68fr);
+    gap: clamp(2rem, 7vw, 6rem);
+  }
+
+  .project-title {
+    display: grid;
+    gap: 1.1rem;
+  }
+
+  .body-large {
+    max-width: 680px;
+    margin: 0;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    width: fit-content;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .back-link:hover {
+    color: var(--text);
+  }
+
+  .project-facts {
+    display: grid;
+    align-content: start;
+    gap: 1.1rem;
+    margin: 0;
+    padding: 1.3rem 0 0;
+  }
+
+  .project-facts div {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  dt {
+    color: var(--accent-strong);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  dd {
+    margin: 0.35rem 0 0;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  .cover {
+    aspect-ratio: 16 / 9;
+    width: min(100% - 32px, 1320px);
+    margin: clamp(42px, 8vw, 86px) auto 0;
+    overflow: hidden;
+    background: var(--surface-muted);
+  }
+
+  .cover img,
+  .gallery-grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .project-body {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .gallery-section {
+    background: var(--surface);
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .gallery-grid figure {
+    aspect-ratio: 4 / 3;
+    margin: 0;
+    background: var(--surface-muted);
+  }
+
+  .gallery-grid figure.wide {
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 9;
+  }
+
+  figcaption {
+    margin-top: 0.65rem;
+    color: var(--text-muted);
+    font-size: 0.86rem;
+  }
+
+  .related-section {
+    border-top: 1px solid var(--line);
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line);
+  }
+
+  .related-grid a {
+    display: grid;
+    gap: 0.5rem;
+    padding: clamp(1.2rem, 4vw, 2rem);
+    background: var(--bg);
+  }
+
+  .related-grid span {
+    font-family: "Iowan Old Style", Georgia, serif;
+    font-size: clamp(1.5rem, 3vw, 2.3rem);
+  }
+
+  .related-grid small {
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 760px) {
+    .project-hero-grid,
+    .body-grid,
+    .gallery-grid,
+    .related-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .gallery-grid figure.wide {
+      aspect-ratio: 4 / 3;
+    }
+  }
+</style>
