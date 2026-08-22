@@ -1,4 +1,4 @@
-# Maya Voss Portfolio
+# Olesia Pivtorak Portfolio
 
 Premium static portfolio website for a professional 3D Visualizer and Interior Designer.
 
@@ -212,4 +212,3 @@ The site includes:
 - Add alt text for every uploaded image.
 - Mark only the strongest projects as `featured`.
 - Run `npm run build` before pushing structural changes.
-

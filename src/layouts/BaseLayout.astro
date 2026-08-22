@@ -10,13 +10,13 @@ interface Props {
 }
 
 const {
-  title = "Maya Voss | 3D Visualizer & Interior Designer",
+  title = "Olesia Pivtorak | 3D Visualizer & Interior Designer",
   description = "Premium interior visualization and design portfolio for refined residential, hospitality, and workspace projects.",
   image = "/uploads/projects/atrium-residence/cover.png",
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const pageTitle = title.includes("Maya Voss") ? title : `${title} | Maya Voss`;
+const pageTitle = title.includes("Olesia Pivtorak") ? title : `${title} | Olesia Pivtorak`;
 ---
 
 <!doctype html>
@@ -57,4 +57,3 @@ const pageTitle = title.includes("Maya Voss") ? title : `${title} | Maya Voss`;
     </script>
   </body>
 </html>
-

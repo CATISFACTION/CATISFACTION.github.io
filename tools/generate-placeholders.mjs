@@ -329,7 +329,7 @@ function save(path, png) {
   console.log(path);
 }
 
-save("public/uploads/profile/maya-voss-profile.png", profileImage());
+save("public/uploads/profile/olesia-pivtorak-profile.png", profileImage());
 
 for (const theme of scenes) {
   save(`public/uploads/projects/${theme.dir}/cover.png`, scene(theme, 0));

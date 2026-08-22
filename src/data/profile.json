@@ -1,13 +1,13 @@
 {
-  "name": "Maya Voss",
+  "name": "Olesia Pivtorak",
   "role": "3D Visualizer & Interior Designer",
   "heroHeadline": "Calm, atmospheric interiors composed with architectural precision.",
   "intro": "I help studios, developers, and private clients see spaces before they are built through refined 3D imagery, material studies, and interior concepts.",
   "profilePhoto": {
-    "src": "/uploads/profile/maya-voss-profile.png",
-    "alt": "Portrait-style studio placeholder for Maya Voss"
+    "src": "/uploads/profile/olesia-pivtorak-profile.png",
+    "alt": "Portrait-style studio placeholder for Olesia Pivtorak"
   },
-  "bio": "Maya Voss is a multidisciplinary 3D visualizer and interior designer focused on quiet, tactile spaces. Her work combines spatial planning, material sensitivity, and cinematic lighting to translate early ideas into clear visual stories for clients and project teams.",
+  "bio": "Olesia Pivtorak is a multidisciplinary 3D visualizer and interior designer focused on quiet, tactile spaces. Her work combines spatial planning, material sensitivity, and cinematic lighting to translate early ideas into clear visual stories for clients and project teams.",
   "experience": [
     "12 years across residential, hospitality, and boutique commercial interiors.",
     "Collaborated with architects, developers, furniture makers, and private clients.",
@@ -39,4 +39,3 @@
   },
   "availability": "Available for selected residential, hospitality, and developer visualization commissions."
 }
-
