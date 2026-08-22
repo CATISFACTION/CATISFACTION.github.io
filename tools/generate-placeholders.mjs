@@ -14,38 +14,6 @@ const scenes = [
     light: [248, 246, 240],
     type: "atrium",
   },
-  {
-    dir: "gallery-loft",
-    base: [230, 229, 225],
-    accent: [38, 40, 42],
-    dark: [20, 22, 23],
-    light: [250, 250, 248],
-    type: "loft",
-  },
-  {
-    dir: "linen-house-suite",
-    base: [218, 211, 202],
-    accent: [132, 108, 86],
-    dark: [54, 50, 45],
-    light: [246, 242, 236],
-    type: "suite",
-  },
-  {
-    dir: "courtyard-studio",
-    base: [224, 225, 218],
-    accent: [93, 118, 92],
-    dark: [46, 52, 45],
-    light: [246, 246, 240],
-    type: "studio",
-  },
-  {
-    dir: "penthouse-library",
-    base: [70, 62, 54],
-    accent: [188, 150, 91],
-    dark: [19, 18, 16],
-    light: [215, 201, 180],
-    type: "library",
-  },
 ];
 
 function crc32(buffer) {
